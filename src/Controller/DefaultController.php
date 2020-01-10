@@ -20,7 +20,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/default", name="default")
      */
-    public function index(RepositoryBookRepository $bookRepository, BookCategoryRepository $bookCategoryRepository, Request $request)
+    public function index(RepositoryBookRepository $bookRepository, BookCategoryRepository $bookCategoryRepository, Request $request, ShoppingCartRepository $cartRepo)
     {
         $category = $request->query->get('category');
         if(!empty($category)){
@@ -31,12 +31,21 @@ class DefaultController extends AbstractController
         $categories = $bookCategoryRepository
                         ->findAll();
         $url = $this->generateUrl('index');
+        $totals = [];
+        if(!empty($request->cookies->get($this->orderCookieName))){
+            $orderId = $request->cookies->get($this->orderCookieName);
+            $cartItems = $cartRepo->findBy(['order_id' => $orderId]);
+            $totals = $this->calculateTotal( $cartItems);
+        }
+        
+
         return $this->render('default/index.html.twig', [
             'books' => $books,
             'categories' => $categories,
             'url' => $url,
             'selected_category' => $category,
             'mycart_url' => $this->generateUrl('mycart'),
+            'totals' => $totals,
         ]);
     }
 
