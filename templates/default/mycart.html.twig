@@ -38,12 +38,20 @@
             </tr>
         {% endfor %}
         <tr>
-                <td>Total </td>
+                <td><strong>Total</storng> </td>
                 <td></td>
                 <td></td>
                 <td>${{grand_total|number_format(2, '.', ',')}}</td>
                 <td></td>
         </tr>
+        <tr>
+                <td class="no-line" colspan="3"><strong>Total after discount({{ totals.cats.Children.discount}}% on Childrens book and {{totals.discount}}% on Total)</strong></td>
+                
+                
+                <td>${{totals.total_after_discount|number_format(2, '.', ',')}}</td>
+                <td></td>
+        </tr>
+        
         <tr>
                 <td><button type="button" class="btn btn-primary btn-sm" onclick="window.location.href = '{{ checkout_url }}';">Checkout</button> <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href = '{{ back_url }}';">Back</button></td>
                 <td></td>

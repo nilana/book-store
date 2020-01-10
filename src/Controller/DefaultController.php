@@ -31,7 +31,7 @@ class DefaultController extends AbstractController
         $categories = $bookCategoryRepository
                         ->findAll();
         $url = $this->generateUrl('index');
-        $totals = ['total' => 0];
+        $totals = ['total_after_discount' => 0];
         if(!empty($request->cookies->get($this->orderCookieName))){
             $orderId = $request->cookies->get($this->orderCookieName);
             $cartItems = $cartRepo->findBy(['order_id' => $orderId]);
@@ -122,12 +122,15 @@ class DefaultController extends AbstractController
     {
         $orderId = $request->cookies->get($this->orderCookieName);
         $items = $cartRepo->findBy(['order_id' => $orderId]);
+        $totals = $this->calculateTotal($items);
+        
         return $this->render('default/mycart.html.twig', [
             'order_id' => $orderId,
             'items' => $items,
             'back_url' => $this->generateUrl('index'),
             'remove_url' => '/', //$this->generateUrl('remove'),
             'checkout_url' => $this->generateUrl('invoice', ['order_id' => $orderId]),
+            'totals' => $totals,
         ]);
     }
 
@@ -219,6 +222,8 @@ class DefaultController extends AbstractController
         if($categoryTotals['cats']['Children']['count'] >= 5){
             $categoryTotals['cats']['Children']['discount'] = 10;
             $categoryTotals['cats']['Children']['total_after_discount'] = $categoryTotals['cats']['Children']['total'] * 0.9;
+            $categoryTotals['total_after_discount'] = $categoryTotals['cats']['Children']['total_after_discount'] + $categoryTotals['cats']['Fiction']['total'];
+
         }
         if($categoryTotals['cats']['Children']['count'] >= 10 && $categoryTotals['cats']['Fiction']['count'] >= 10){
             $categoryTotals['discount'] = 5;
