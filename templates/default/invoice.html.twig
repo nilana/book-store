@@ -49,7 +49,7 @@ $(function() {
     							<!-- foreach ($order->lineItems as $line) or some such thing here -->
 								{% for item in items  %}
     							<tr>
-    								<td>BS-200</td>
+    								<td>{{item.getItem.getName}}</td>
     								<td class="text-center">${{item.getItem.getPrice()|number_format(2, '.', ',')}}</td>
     								<td class="text-center">{{item.getQuantity()}}</td>
     								<td class="text-right">${{item.getItem.getPrice()*item.getQuantity()}}</td>
