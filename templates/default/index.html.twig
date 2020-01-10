@@ -11,7 +11,7 @@
     }
 </script>
 <div class="container">
-   <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href = '{{mycart_url}}';">My cart (${{totals.total}})</button>
+   <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href = '{{mycart_url}}';">My cart (${{ totals.total ?  totals.total : 0}})</button>
    <br>
    <br>
    <form method="get">

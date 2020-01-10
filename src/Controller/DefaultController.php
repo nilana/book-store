@@ -31,7 +31,7 @@ class DefaultController extends AbstractController
         $categories = $bookCategoryRepository
                         ->findAll();
         $url = $this->generateUrl('index');
-        $totals = [];
+        $totals = ['total' => 0];
         if(!empty($request->cookies->get($this->orderCookieName))){
             $orderId = $request->cookies->get($this->orderCookieName);
             $cartItems = $cartRepo->findBy(['order_id' => $orderId]);
