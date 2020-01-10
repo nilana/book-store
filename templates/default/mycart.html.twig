@@ -32,8 +32,8 @@
             <tr>
                 <td>{{ item.getItem().getName() }}</td>
                 <td>{{quantity}}</td>
-                <td>{{price}}</td>
-                <td>{{total|number_format(2, '.', ',')}}</td>
+                <td>${{price}}</td>
+                <td>${{total|number_format(2, '.', ',')}}</td>
                 <td><button type="button" class="btn btn-primary btn-sm" onclick="window.location.href = '{{ path('remove', {id: item.getId()}) }}';">Remove</button></td>
             </tr>
         {% endfor %}
@@ -41,7 +41,7 @@
                 <td>Total </td>
                 <td></td>
                 <td></td>
-                <td>{{grand_total|number_format(2, '.', ',')}}</td>
+                <td>${{grand_total|number_format(2, '.', ',')}}</td>
                 <td></td>
         </tr>
         <tr>

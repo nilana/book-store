@@ -39,7 +39,7 @@
                 <th scope="row">{{ book.id }}</th>
                 <td>{{ book.name }}</td>
                 <td>{{book.author}}</td>
-                <td>{{book.price}}</td>
+                <td>${{book.price}}</td>
                 <td><button type="button" class="btn btn-primary btn-sm" onclick="window.location.href = '{{url}}buy/{{book.id}}';">Buy</button></td>
             </tr>
         {% endfor %}
