@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<script>
+
+$(function() {
+    
+    $("#add-cart").click(function(){
+        console.log($("#quantity").val());
+
+        axios.post('{{cart_url}}', {
+                'quantity': $("#quantity").val(),
+                'book_id': $("#book-id").val(),
+
+            }).then(function (response) {
+                //console.log(response.data.status);
+                if(response.data.status){
+                    $("#success-msg").html(response.data.message);
+                    $("#success-msg").show();
+                    $("#quantity").hide();
+                }else{
+                    $("#error-msg").html(response.data.message);
+                    $("#error-msg").show();
+                }
+                //if (response.data.status) {
+                    
+                //}
+            }).catch(function (error) {
+                //console.error(error);
+                $("#error-msg").show();
+
+            });
+    });
+
+    $('#go-back').click(function(){
+        window.location = '{{back_url}}';
+    })
+    
+
+});
+    
+</script>
+<div class="container">
+
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{book.name}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{book.author}}</h6>
+            <p class="card-text">{{book.description}}</p>
+            <p class="card-text">Price: {{book.price}}</p>
+            <br>
+            <input type="text" value="1" class="form-control input-sm" id="quantity">
+            <br>
+            <div id="error-msg" style="display:none;" class="alert alert-danger" role="alert">Error occurred</div>
+            <div id="success-msg" style="display:none;" class="alert alert-success" role="alert"></div>
+            <br>
+            <button id="add-cart" type="button" class="btn btn-primary btn-sm">Add to cart</button>
+            <button id="go-back" type="button" class="btn btn-primary btn-sm">Back</button>
+            <input type="hidden" id="book-id" value="{{book.id}}">
+        </div>
+    </div>
+    
+</div>
+
+
+{% endblock %}

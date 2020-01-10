@@ -1,0 +1,28 @@
+index:
+  path: /
+  controller: App\Controller\DefaultController::index
+
+buy:
+  path: /buy/{book}
+  controller: App\Controller\DefaultController::buy
+
+add-to-cart:
+  path: /add-to-cart
+  controller: App\Controller\DefaultController::addToCart
+  methods:    POST
+
+mycart:
+  path: /mycart
+  controller: App\Controller\DefaultController::myCart
+
+remove:
+  path: /remove/{id}
+  controller: App\Controller\DefaultController::remove
+
+remove-from-cart:
+  path: /remove-from-cart
+  controller: App\Controller\DefaultController::removeFromCart
+
+invoice:
+  path: /invoice
+  controller: App\Controller\DefaultController::invoice

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<script>
+
+    function search(el){
+        window.location = '{{url}}?category='+el.value;
+    }
+</script>
+<div class="container">
+   <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href = '{{mycart_url}}';">My cart</button>
+   <br>
+   <br>
+   <form method="get">
+        <select id="category-search" class="form-control form-control-sm" onchange="search(this);">
+        <option value="0"> Search by category</option>
+        {% for category in categories %}
+            <option value="{{category.id}}" {{selected_category == category.id ? 'selected' : '' }}>{{category.name}}</option>
+        {% endfor %}
+        </select>
+    </form>
+    <br>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Auther</th>
+            <th scope="col">Price</th>
+            <th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for book in books %}
+            <tr>
+                <th scope="row">{{ book.id }}</th>
+                <td>{{ book.name }}</td>
+                <td>{{book.author}}</td>
+                <td>{{book.price}}</td>
+                <td><button type="button" class="btn btn-primary btn-sm" onclick="window.location.href = '{{url}}buy/{{book.id}}';">Buy</button></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<script>
+
+$(function() {
+    
+    $('#go-back').click(function(){
+        window.location = '{{back_url}}';
+    })
+    
+
+});
+    
+</script>
+<div class="container">
+
+    <div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+    		<div class="invoice-title">
+    			<h2>Invoice</h2><h3 class="pull-right">Order # 12345</h3>
+    		</div>
+    		<hr>
+    	</div>
+    </div>
+    
+    <div class="row">
+    	<div class="col-md-12">
+    		<div class="panel panel-default">
+    			<div class="panel-heading">
+    				<h3 class="panel-title"><strong>Order summary</strong></h3>
+    			</div>
+    			<div class="panel-body">
+    				<div class="table-responsive">
+    					<table class="table table-condensed">
+    						<thead>
+                                <tr>
+        							<td><strong>Item</strong></td>
+        							<td class="text-center"><strong>Price</strong></td>
+        							<td class="text-center"><strong>Quantity</strong></td>
+        							<td class="text-right"><strong>Totals</strong></td>
+                                </tr>
+    						</thead>
+    						<tbody>
+    							<!-- foreach ($order->lineItems as $line) or some such thing here -->
+								{% for item in items  %}
+    							<tr>
+    								<td>BS-200</td>
+    								<td class="text-center">${{item.getItem.getPrice()|number_format(2, '.', ',')}}</td>
+    								<td class="text-center">{{item.getQuantity()}}</td>
+    								<td class="text-right">${{item.getItem.getPrice()*item.getQuantity()}}</td>
+    							</tr>
+								{% endfor %}
+    							<tr>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line text-center"><strong>Total</strong></td>
+    								<td class="no-line text-right">${{totals.total_display|number_format(2, '.', ',')}}</td>
+    							</tr>
+								<tr>
+    								<td class="no-line" colspan="2">Total after discount({{ totals.cats.Children.discount}}% on Childrens book and {{totals.discount}} on Total)</td>
+    							
+    								<td class="no-line text-center"></td>
+    								<td class="no-line text-right">${{totals.total_after_discount|number_format(2, '.', ',')}}</td>
+    							</tr>
+    						</tbody>
+    					</table>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+</div>
+    
+</div>
+
+
+{% endblock %}

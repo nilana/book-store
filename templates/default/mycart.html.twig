@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<script>
+
+ 
+</script>
+<div class="container">
+    My cart
+    <br>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Unit Price</th>
+                <th scope="col">Total</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% set grand_total = 0 %}
+        {% for item in items  %}
+        {% set quantity = item.getQuantity() %}
+        {% set price = item.getItem().getPrice() %}
+        {% set total = price*quantity %}
+        {% set grand_total = grand_total + total %}
+        
+            <tr>
+                <td>{{ item.getItem().getName() }}</td>
+                <td>{{quantity}}</td>
+                <td>{{price}}</td>
+                <td>{{total|number_format(2, '.', ',')}}</td>
+                <td><button type="button" class="btn btn-primary btn-sm" onclick="window.location.href = '{{ path('remove', {id: item.getId()}) }}';">Remove</button></td>
+            </tr>
+        {% endfor %}
+        <tr>
+                <td>Total </td>
+                <td></td>
+                <td></td>
+                <td>{{grand_total|number_format(2, '.', ',')}}</td>
+                <td></td>
+        </tr>
+        <tr>
+                <td><button type="button" class="btn btn-primary btn-sm" onclick="window.location.href = '{{ checkout_url }}';">Checkout</button> <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href = '{{ back_url }}';">Back</button></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
